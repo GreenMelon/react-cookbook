@@ -1,0 +1,27 @@
+{
+  "name": "react-cookbook",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config ./build/webpack.dev.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/GreenMelon/react-cookbook.git"
+  },
+  "keywords": [
+    "react"
+  ],
+  "author": "caigua",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GreenMelon/react-cookbook/issues"
+  },
+  "homepage": "https://github.com/GreenMelon/react-cookbook#readme",
+  "devDependencies": {
+    "webpack": "4.32.2",
+    "webpack-cli": "3.3.2"
+  }
+}
