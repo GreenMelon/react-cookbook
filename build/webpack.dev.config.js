@@ -11,4 +11,17 @@ module.exports = {
         path: path.join(__dirname, '../dist'),
         filename: 'bundle.js',
     },
+
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                // cacheDirectory 是用来缓存编译结果, 下次编译加速
+                use: ['babel-loader?cacheDirectory=true'],
+                include: path.join(__dirname, '../src'),
+            }
+        ],
+    },
+
+    devtool: 'cheap-module-source-map',
 };
