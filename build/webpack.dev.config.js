@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
     mode: 'development',
- 
+
     // 入口
     entry: path.join(__dirname, '../src/index.js'),
 
@@ -12,6 +12,7 @@ module.exports = {
         filename: 'bundle.js',
     },
 
+    // loader
     module: {
         rules: [
             {
@@ -23,5 +24,37 @@ module.exports = {
         ],
     },
 
-    devtool: 'cheap-module-source-map',
+    devtool: 'inline-source-map',
+
+    // webpack-dev-server
+    devServer: {
+        contentBase: path.join(__dirname, '../dist'),
+        // gzip 压缩
+        compress: true,
+        // 允许 ip 访问
+        host: '0.0.0.0',
+        // 端口
+        port: 8000,
+        // 热更新
+        hot: true,
+        // 解决启动后刷新 404
+        historyApiFallback:true,
+        // 配置服务代理
+        proxy: {
+            '/api': {
+                target: 'http://localhost:8000',
+                // 可转换
+                // pathRewrite: {'^/api': ''},
+                changeOrigin: true,
+            },
+        },
+    },
+
+    resolve: {
+        alias: {
+            pages: path.join(__dirname, '../src/pages'),
+            components: path.join(__dirname, '../src/components'),
+            router: path.join(__dirname, '../src/router'),
+        }
+    },
 };
