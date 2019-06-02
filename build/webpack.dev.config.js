@@ -1,4 +1,5 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     mode: 'development',
@@ -20,7 +21,29 @@ module.exports = {
                 // cacheDirectory 是用来缓存编译结果, 下次编译加速
                 use: ['babel-loader?cacheDirectory=true'],
                 include: path.join(__dirname, '../src'),
-            }
+            },{
+                // css-no-modules
+                // test: /\.css$/,
+                // use: ['style-loader', 'css-loader', 'postcss-loader'],
+
+                // css-modules
+                // test: /\.css$/,
+                // use: ['style-loader', 'css-loader?modules', 'postcss-loader'],
+
+                // css-modules
+                test: /\.css$/,
+                use: [
+                    'style-loader',
+                    {
+                        loader:'css-loader',
+                        options: {
+                            modules: true,
+                            localIdentName: '[local]--[hash:base64:5]'
+                        },
+                    },
+                    'postcss-loader'
+                ],
+            },
         ],
     },
 
@@ -28,7 +51,8 @@ module.exports = {
 
     // webpack-dev-server
     devServer: {
-        contentBase: path.join(__dirname, '../dist'),
+        // 访问 dist 目录下的 index.html
+        // contentBase: path.join(__dirname, '../dist'),
         // gzip 压缩
         compress: true,
         // 允许 ip 访问
@@ -49,6 +73,13 @@ module.exports = {
             },
         },
     },
+
+    plugins: [
+        new HtmlWebpackPlugin({
+            filename: 'index.html',
+            template: path.join(__dirname, '../public/index.html')
+        }),
+    ],
 
     resolve: {
         alias: {
