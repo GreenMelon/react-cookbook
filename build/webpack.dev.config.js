@@ -1,4 +1,5 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     mode: 'development',
@@ -28,7 +29,8 @@ module.exports = {
 
     // webpack-dev-server
     devServer: {
-        contentBase: path.join(__dirname, '../dist'),
+        // 访问 dist 目录下的 index.html
+        // contentBase: path.join(__dirname, '../dist'),
         // gzip 压缩
         compress: true,
         // 允许 ip 访问
@@ -49,6 +51,13 @@ module.exports = {
             },
         },
     },
+
+    plugins: [
+        new HtmlWebpackPlugin({
+            filename: 'index.html',
+            template: path.join(__dirname, '../public/index.html')
+        }),
+    ],
 
     resolve: {
         alias: {
