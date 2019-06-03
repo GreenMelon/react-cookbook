@@ -1,13 +1,17 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
-    mode: 'development',
+    mode: 'production',
 
     // 入口
     // entry: path.join(__dirname, '../src/index.js'),
     entry: {
         app: [
+            '@babel/polyfill',
             path.join(__dirname, '../src/index.js'),
         ],
         vendor: [
@@ -19,6 +23,7 @@ module.exports = {
 
     // 输出到 dist 目录
     output: {
+        publicPath: '/',
         path: path.join(__dirname, '../dist'),
         // filename: 'bundle.js',
         filename: '[name].[hash].js',
@@ -45,7 +50,10 @@ module.exports = {
                 // css-modules
                 test: /\.css$/,
                 use: [
-                    'style-loader',
+                    // 'style-loader',
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                    },
                     {
                         loader:'css-loader',
                         options: {
@@ -69,40 +77,27 @@ module.exports = {
         ],
     },
 
-    devtool: 'inline-source-map',
-
-    // webpack-dev-server
-    devServer: {
-        // 访问 dist 目录下的 index.html
-        // contentBase: path.join(__dirname, '../dist'),
-        // gzip 压缩
-        compress: true,
-        // 允许 ip 访问
-        host: '0.0.0.0',
-        // 端口
-        port: 8000,
-        // 热更新
-        hot: true,
-        // 解决启动后刷新 404
-        historyApiFallback:true,
-        // 配置服务代理
-        proxy: {
-            '/api': {
-                target: 'http://localhost:8000',
-                // 可转换
-                // pathRewrite: {'^/api': ''},
-                changeOrigin: true,
-            },
-        },
-    },
+    devtool: 'none',
 
     // 插件配置
     plugins: [
+        // 每次打包前清空
+        new CleanWebpackPlugin(),
+
         // 提取 JS
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: path.join(__dirname, '../public/index.html'),
-        }),    
+        }),
+
+        // 提取 CSS
+        new MiniCssExtractPlugin({
+            filename: '[name].[contenthash].css',
+            chunkFilename: '[id].[contenthash].css',
+        }),
+
+        // 压缩 CSS
+        new OptimizeCssAssetsPlugin(),
     ],
 
     // 别名配置
@@ -113,5 +108,12 @@ module.exports = {
             images: path.join(__dirname, '../src/images'),
             router: path.join(__dirname, '../src/router'),
         }
+    },
+
+    // 公共块提取
+    optimization: {
+        splitChunks: {
+            chunks: 'all',
+        },
     },
 };
