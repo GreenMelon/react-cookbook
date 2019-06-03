@@ -5,12 +5,24 @@ module.exports = {
     mode: 'development',
 
     // 入口
-    entry: path.join(__dirname, '../src/index.js'),
+    // entry: path.join(__dirname, '../src/index.js'),
+    entry: {
+        app: [
+            path.join(__dirname, '../src/index.js'),
+        ],
+        vendor: [
+            'react',
+            'react-dom',
+            'react-router-dom'
+        ],
+    },
 
     // 输出到 dist 目录
     output: {
         path: path.join(__dirname, '../dist'),
-        filename: 'bundle.js',
+        // filename: 'bundle.js',
+        filename: '[name].[hash].js',
+        chunkFilename: '[name].[chunkhash].js',
     },
 
     // loader
