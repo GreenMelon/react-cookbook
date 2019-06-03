@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
     mode: 'development',
@@ -45,7 +46,10 @@ module.exports = {
                 // css-modules
                 test: /\.css$/,
                 use: [
-                    'style-loader',
+                    // 'style-loader',
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                    },
                     {
                         loader:'css-loader',
                         options: {
@@ -97,10 +101,17 @@ module.exports = {
     },
 
     plugins: [
+        // 提取 JS
         new HtmlWebpackPlugin({
             filename: 'index.html',
-            template: path.join(__dirname, '../public/index.html')
+            template: path.join(__dirname, '../public/index.html'),
         }),
+
+        // 压缩 CSS
+        new MiniCssExtractPlugin({
+            filename: '[name].[contenthash].css',
+            chunkFilename: '[id].[contenthash].css',
+        }),        
     ],
 
     resolve: {
