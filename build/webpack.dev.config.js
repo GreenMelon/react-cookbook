@@ -43,6 +43,16 @@ module.exports = {
                     },
                     'postcss-loader'
                 ],
+            },{
+                test: /\.(png|jpg|gif)$/,
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 8192,
+                        },
+                    }
+                ],
             },
         ],
     },
@@ -83,8 +93,9 @@ module.exports = {
 
     resolve: {
         alias: {
-            pages: path.join(__dirname, '../src/pages'),
             components: path.join(__dirname, '../src/components'),
+            pages: path.join(__dirname, '../src/pages'),
+            images: path.join(__dirname, '../src/images'),
             router: path.join(__dirname, '../src/router'),
         }
     },
