@@ -11,6 +11,9 @@ export default () => {
                 <li>
                     <Link to="/movie">movie</Link>
                 </li>
+                <li>
+                    <Link to="/counter">counter</Link>
+                </li>
             </ul>
         </div>
     )
