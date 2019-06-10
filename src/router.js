@@ -27,6 +27,12 @@ const Counter = loadable({
     timeout: 10000,
 });
 
+const User = loadable({
+    loader: () => import('pages/user'),
+    loading: Loading,
+    timeout: 10000,
+});
+
 const NotFound = loadable({
     loader: () => import('pages/notfound'),
     loading: Loading,
@@ -39,6 +45,7 @@ const getRouter = () => (
         <Route path="/" component={Home} exact/>
         <Route path="/movie" component={Movie} />
         <Route path="/counter" component={Counter} />
+        <Route path="/user" component={User} />
         <Route component={NotFound} />
     </Switch>
 );

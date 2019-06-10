@@ -14,6 +14,9 @@ export default () => {
                 <li>
                     <Link to="/counter">counter</Link>
                 </li>
+                <li>
+                    <Link to="/user">user</Link>
+                </li>
             </ul>
         </div>
     )
