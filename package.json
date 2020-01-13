@@ -13,7 +13,7 @@
     "last 2 versions"
   ],
   "repository": {
-    "type": "git", 
+    "type": "git",
     "url": "git+ssh://git@github.com/GreenMelon/react-cookbook.git"
   },
   "keywords": [
